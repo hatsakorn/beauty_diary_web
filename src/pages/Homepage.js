@@ -1,28 +1,30 @@
 import React from 'react'
-import HomeLogo from '../assets/HomeLogo.png'
-import NailLogo from '../assets/NailLogo.png'
-import ReservedLogo from '../assets/reservedLogo.png'
-import walletLogo from '../assets/walletLogo.png'
 import line from '../assets/Line.png'
 import { Carousel } from 'flowbite-react';
-// import Home from '../assets/index'
-// import Reserve from '../assets/index'
+import Footer from '../layouts/Footer';
+import RegisterContainer from '../features/auth/RegisterContainer';
+
 
 export default function Homepage() {
   return (
   <>
   {/* Header */}
-  <div className='flex justify-around bg-rose-300'>
+<div className='m-8'>
+</div>
+
+{/* logo login register */}
+  <div className='flex justify-around bg-rose-300 -m-1'>
     <div className='bg-pink-200 p-2 mt-2 w-32 mb-2 rounded-full text-center'>
     <p>LOGO</p>
     </div>
     <div>
       <div className='bg-pink-200 p-2 mt-2 rounded-lg text-center'>
-        <p>Register</p>
+        <button>Register</button>
+        <RegisterContainer/>
       </div>
       <br/>
       <div className='bg-pink-200 p-2 mb-2 rounded-lg text-center'>
-        <p>Log in</p>
+        <button>Log in</button>
       </div>
     </div>
     <div>
@@ -36,16 +38,16 @@ export default function Homepage() {
   </div>
 
 {/* Business obj */}
-<div className='p-4 text-center'>
+<div className='p-1 text-center'>
     <p className='text-lg text-rose-300'><strong>Nail salon, hand spa and eyelashes</strong></p>
 </div>
 
 {/* Container-Box */}
-<div>
+<div className='-m-1'>
       <div>
-        <h1>Promotion & Reviews</h1>
+        <h1><strong>Promotion & Reviews</strong></h1>
       </div>
-      <div className="h-72 sm:h-64 xl:h-80 2xl:h-96">
+      <div className="h-72 sm:h-64 xl:h-80 2xl:h-96 mt-1 mb-2">
   <Carousel slide={false}>
     <img
       src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
@@ -70,9 +72,9 @@ export default function Homepage() {
   </Carousel>
 </div>
       <div>
-        <h1>Recommend Package</h1>
+        <h1><strong>Recommend Package</strong></h1>
       </div>
-      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 mb-3">
+      <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 mb-5 mt-1">
   <Carousel slide={false}>
     <img
       src="https://flowbite.com/docs/images/carousel/carousel-1.svg"
@@ -97,29 +99,7 @@ export default function Homepage() {
   </Carousel>
 </div>
 </div>
-
-    {/* <Footer/> */}
-    <div className=' bg-rose-300'>
-        <div className='flex justify-between pl-10 pr-10 pt-3 pb-4'>
-        <div>
-        <img className='w-10 h-10' src={HomeLogo}/>
-        <h3>Home</h3>
-        </div>
-        <div>
-        <img className='w-10 h-10' src={ReservedLogo}/>
-        <h2>Reserve</h2>
-        </div>
-        <div>
-        <img className='w-10 h-10' src={NailLogo}/>
-        <h2>Courses</h2>
-        </div>
-        <div>
-        <img className='w-10 h-10' src={walletLogo}/>
-        <h2>Wallet</h2>
-        </div>
-        </div>
-    </div>
-    
+    <Footer/>
     <div></div>
     </>
   )
