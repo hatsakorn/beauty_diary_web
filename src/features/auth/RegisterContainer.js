@@ -3,11 +3,15 @@ import ModalShow from '../../components/Modal';
 
 
 function RegisterContainer() {
-    const [open,setOpen] = useState(false)
+    const [isVisible,setIsvisible] = useState(false)
 
+    const handleModalOpen = () => {
+      setIsvisible(true)
+    }
   return (
     <>
-    {open && <ModalShow onClose={()=>setOpen(false)}></ModalShow>}
+    <button onClick={handleModalOpen}>Register</button>
+    <ModalShow show={isVisible} onClose={()=>setIsvisible(false)}></ModalShow>
     </>
   )
 }

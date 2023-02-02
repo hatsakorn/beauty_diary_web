@@ -14,7 +14,6 @@ function PackagePage() {
     <Carousels/>
     </div>
     <div className='bg-white m-8'></div>
-    <Footer/>
     </>
   )
 }

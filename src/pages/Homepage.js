@@ -1,7 +1,6 @@
 import React from 'react'
 import line from '../assets/Line.png'
 import { Carousel } from 'flowbite-react';
-import Footer from '../layouts/Footer';
 import RegisterContainer from '../features/auth/RegisterContainer';
 
 
@@ -19,7 +18,6 @@ export default function Homepage() {
     </div>
     <div>
       <div className='bg-pink-200 p-2 mt-2 rounded-lg text-center'>
-        <button>Register</button>
         <RegisterContainer/>
       </div>
       <br/>
@@ -99,7 +97,6 @@ export default function Homepage() {
   </Carousel>
 </div>
 </div>
-    <Footer/>
     <div></div>
     </>
   )

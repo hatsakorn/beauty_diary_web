@@ -2,11 +2,11 @@ import React from 'react'
 import { Button, Modal, TextInput } from 'flowbite-react'
 
 
-function ModalShow({onClose}) {
+function ModalShow({show}) {
   return (
     <>
   <Modal
-    show={true}
+    show={show}
     size="md"
     popup={true}
     // onClose={onClose}
