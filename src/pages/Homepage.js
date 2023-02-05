@@ -2,6 +2,7 @@ import React from 'react'
 import line from '../assets/Line.png'
 import { Carousel } from 'flowbite-react';
 import RegisterContainer from '../features/auth/RegisterContainer';
+import { Link } from 'react-router-dom';
 
 
 export default function Homepage() {
@@ -69,8 +70,11 @@ export default function Homepage() {
     />
   </Carousel>
 </div>
-      <div>
+      <div className='flex justify-between'>
         <h1><strong>Recommend Package</strong></h1>
+        <Link to="/packages">
+        <h1 className='underline'>More packages</h1>
+        </Link>
       </div>
       <div className="h-56 sm:h-64 xl:h-80 2xl:h-96 mb-5 mt-1">
   <Carousel slide={false}>

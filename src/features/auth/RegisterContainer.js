@@ -11,7 +11,7 @@ function RegisterContainer() {
   return (
     <>
     <button onClick={handleModalOpen}>Register</button>
-    <ModalShow show={isVisible} onClose={()=>setIsvisible(false)}></ModalShow>
+    <ModalShow isVisible={isVisible} onClose={()=>setIsvisible(false)}></ModalShow>
     </>
   )
 }
