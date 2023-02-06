@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import AuthLayout from "../layouts/AuthLayout";
 import CoursePage from "../pages/CoursePage";
 import Homepage from "../pages/HomePage";
@@ -7,14 +7,14 @@ import WalletPage from "../pages/WalletPage"
 import ReservePage from "../pages/ReservePage"
 import LoginPage from '../pages/LoginPage'
 import ThankPage from '../pages/ThankPage'
+import RedirectAuthenticate from '../features/auth/RedirectAuthenticate'
+import ProtectedRoute from '../features/auth/ProtectedRoute'
 const router = createBrowserRouter([
   
   {
     path: "/",
     element: (
-      <>
         <AuthLayout/>
-      </>
     ),
     children: [
       {
@@ -26,16 +26,24 @@ const router = createBrowserRouter([
         element: <PackagePage />,
       },
       {
-        path: "/wallet",
-        element: <WalletPage />,
+        path: "/courses",
+        element:<CoursePage/>
       },
       {
         path: "/login",
-        element: <LoginPage />
-      },
+        element: 
+        <RedirectAuthenticate>
+        <LoginPage />
+        </RedirectAuthenticate>
+      },{
+        element:
+        <ProtectedRoute>
+        <Outlet/>
+        </ProtectedRoute>,
+        children:[
         {
-          path: "/courses",
-          element: <CoursePage />,
+          path: "/wallet",
+          element: <WalletPage />,
         },
         {
           path: "/reserve",
@@ -45,6 +53,7 @@ const router = createBrowserRouter([
           path: "/thank",
           element: <ThankPage/>,
         },
+      ]}
   ],
 }
   // {

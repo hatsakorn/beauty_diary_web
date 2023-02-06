@@ -23,10 +23,7 @@ function Carousels() {
   </Carousel>
   </div>
 </div>
-      <div>
-        <h1 className='m-2 text-xl text-center'><strong>All Packages</strong></h1>
-      </div>
-      <div className="flex justify-center">
+      {/* <div className="flex justify-center">
       <div className="h-72 w-80 sm:h-64 xl:h-80 2xl:h-96 mb-5 mt-1">
   <Carousel slide={false}>
     <img
@@ -39,7 +36,7 @@ function Carousels() {
     />
   </Carousel>
 </div>
-</div>
+</div> */}
 </div>
 </>
   )
