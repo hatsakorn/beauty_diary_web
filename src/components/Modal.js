@@ -1,4 +1,4 @@
-import React, { Children, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal, TextInput } from 'flowbite-react'
 import * as authApi from '../apis/auth-api'
 const initialInput = {

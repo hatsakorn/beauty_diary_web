@@ -14,6 +14,7 @@ export default function AuthContextProvider({children}) {
     const initialData = async() =>{
       const data = await jwtDecode(accessToken)
       setAuthenticatedUser(data)
+      // console.log(data)
       }
       // console.log(accessToken)
       if(accessToken){

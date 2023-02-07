@@ -1,8 +1,18 @@
 import Carousels from '../layouts/Carousels';
-import React from 'react'
+import React, { useState } from 'react'
+import useAuth from '../hooks/useAuth';
+import PackageModal from '../components/PackageModal';
 
 
 function PackagePage() {
+  const {authenticatedUser} = useAuth()
+
+  const [openModal,setOpenModal] = useState(false)
+
+  const handleOpenModal = () => {
+    setOpenModal(true)
+  }
+console.log(authenticatedUser)
   return (
     <>
     <div>
@@ -11,7 +21,21 @@ function PackagePage() {
     </div>
     <Carousels/>
     </div>
-    <h1 className='bg-rose-300 pb-5 pt-2 '>All Packages</h1>
+    <div className='flex bg-rose-300 justify-evenly'>
+    <h1 className='bg-rose-300 pb-2 pt-2 -ml-2 '>All Packages</h1>
+    {authenticatedUser.role === "admin" ? (
+    <>
+    <button 
+    className='bg-rose-300 pb-2 pt-2 ml-10 underline' 
+    onClick={handleOpenModal}
+    >
+      click to add Package
+    </button>
+    </>
+    ):""}
+
+    <PackageModal openModal={openModal} onClose={()=>setOpenModal(false)}></PackageModal>
+    </div>
     <Carousels/>
     <div className='bg-white m-8'></div>
     </>
