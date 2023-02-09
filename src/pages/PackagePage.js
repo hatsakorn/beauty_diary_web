@@ -12,7 +12,6 @@ function PackagePage() {
   const handleOpenModal = () => {
     setOpenModal(true)
   }
-console.log(authenticatedUser)
   return (
     <>
     <div>
@@ -23,7 +22,7 @@ console.log(authenticatedUser)
     </div>
     <div className='flex bg-rose-300 justify-evenly'>
     <h1 className='bg-rose-300 pb-2 pt-2 -ml-2 '>All Packages</h1>
-    {authenticatedUser.role === "admin" ? (
+    {authenticatedUser && (authenticatedUser.role === "admin" ? (
     <>
     <button 
     className='bg-rose-300 pb-2 pt-2 ml-10 underline' 
@@ -32,7 +31,7 @@ console.log(authenticatedUser)
       click to add Package
     </button>
     </>
-    ):""}
+    ):"")}
 
     <PackageModal openModal={openModal} onClose={()=>setOpenModal(false)}></PackageModal>
     </div>

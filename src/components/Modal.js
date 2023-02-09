@@ -14,24 +14,17 @@ const initialInput = {
 }
 
 function ModalShow({isVisible,onClose}) {
-//   useEffect(()=>{  
-//     document.addEventListener('keydown',(event) => {
-//     if (event.key === "Escape"){
-//       onClose();
-//     }
-// })},[isVisible])
+
 
 const [input,setInput] = useState(initialInput)
-// console.log(input)
+
 const handleChangeInput = (e) => {
-  // console.log(e.target.name)
   setInput({...input,[e.target.name]:e.target.value})
 }
 
   const handleSubmitForm = async(e) => {
     try{
        e.preventDefault()
-        // console.log(input)
       await authApi.register(input)
       setInput(initialInput)
       onClose()

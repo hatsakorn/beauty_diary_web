@@ -6,6 +6,8 @@ const initialInput = {
     "title":"",
     "price":"",
     "topup":"",
+    "packageImage":"",
+    "adsImage":""
 }
 
 function PackageModal({openModal,onClose}) {
@@ -48,7 +50,7 @@ const handleChangeInput = (e) => {
           </div>
           <TextInput
             id="title"
-            placeholder="add Package"
+            placeholder="Package Name"
             name="title"
             value={input.title}
             required={true}
@@ -79,6 +81,31 @@ const handleChangeInput = (e) => {
             onChange={handleChangeInput}
           />
         </div>
+        
+        <div>
+          <div className="mb-2 block">
+          </div>
+          <TextInput
+            id="packageImage"
+            type="file"
+            name="packageImage"
+            value={input.packageImage}
+            onChange={handleChangeInput}
+          />
+        </div>
+        <label>Package Image</label>
+        <div>
+          <div className="mb-2 block">
+          </div>
+          <TextInput
+            id="adsImage"
+            type="file"
+            name="adsImage"
+            value={input.adsImage}
+            onChange={handleChangeInput}
+          />
+        </div>
+        <label>advertisement Image</label>
         <div className="flex justify-center">
              <Button type='submit'>
              Add
