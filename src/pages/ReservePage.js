@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import SelectionList from '../features/reserve/SelectionList'
 import * as reserveApi from '../apis/reserve-api'
 import Timeslot from '../features/reserve/Timeslot';
-// import useAuth from '../hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
 
 const initialInput = {
   "title":"",
@@ -14,6 +14,7 @@ const initialInput = {
 function ReservePage() {
 const [getCourses,setGetCourses] = useState([])
 const [inputReserve,setInputReserve] = useState(initialInput)
+const navigate = useNavigate()
 
 useEffect(()=>{
   const fetchCourse = async () => {
@@ -36,11 +37,11 @@ const handleSubmitForm = async e => {
   try{
     await reserveApi.reservation(inputReserve)
     setInputReserve(initialInput)
+    navigate('/thank')
   }catch(err){
     console.log(err)
   }
   }
-
 
   return (
     <>
@@ -62,7 +63,6 @@ const handleSubmitForm = async e => {
       <button type="submit" className='bg-rose-300 rounded-lg p-2 my-3'>
         Submit
       </button>
-      
     </form>
     </>
   )

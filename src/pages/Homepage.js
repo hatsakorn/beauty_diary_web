@@ -1,5 +1,5 @@
 import React from 'react'
-import { Carousel } from 'flowbite-react';
+// import { Carousel } from 'flowbite-react';
 import RegisterContainer from '../features/auth/RegisterContainer';
 import { Link } from 'react-router-dom';
 import useAuth from '../hooks/useAuth'
