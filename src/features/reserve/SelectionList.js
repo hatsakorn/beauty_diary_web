@@ -7,10 +7,11 @@ const initialCourseInput = {
   "price":"",
   "discount":0,
   "description":"",
+  "timeUse":"",
   "courseImage":""
 }
 
-export default function SelectionList({getCourses,setInputReserve,inputReserve}){
+export default function SelectionList({getCourses,setGetCourses,inputReserve,setInputReserve}){
 const [edit,setEdit] = useState(false)
 const [inputCourse,setInputCourse] = useState(initialCourseInput)
 
@@ -18,12 +19,14 @@ const {authenticatedUser} = useAuth()
 
 const handleChangeInput = (e) => {
   setInputCourse({...inputCourse,[e.target.name]:e.target.value})
-  // console.log(inputCourse)
 }
-const handleUserChangeInput = (e) => {
-  // setInputReserve({...inputReserve,[e.target.name]:e.target.value})
-  setInputReserve({...inputReserve,[e.target.name]:e.target.value})
+// console.log(getCourses)
+const handleShowCourse = (e) => {
+  setInputReserve(previous=>({...previous,[e.target.name]:e.target.value}))
+  console.log(inputReserve)
+  console.log(e.target.name , e.target.value)
 }
+
 
 const handleSubmitForm = async e => {
   e.preventDefault()
@@ -35,15 +38,17 @@ const handleSubmitForm = async e => {
   }
   }
 
-
-
 return (
 <>
-{!edit ? (<select onChange={handleUserChangeInput} name="title" >
-  {getCourses.map((el,id)=>(
-   <option key={id}>{el.title}</option>
+{edit === false ? (
+  <>
+  <select name="title" onChange={handleShowCourse}>
+    <option hidden="hidden">Choose Your Course</option>
+  {getCourses.map(el=>(
+    <option value={el.title} key={el.id}>{el.title}</option>
     ))}
-</select>
+  </select>
+  </>
 ):(
 <>
 <form onSubmit={handleSubmitForm}>
@@ -72,6 +77,15 @@ placeholder="Add description"
 name="description"
 id="description"
 value={inputCourse.description}
+onChange={handleChangeInput}
+/>
+<input 
+className="block m-2" 
+type="text" 
+placeholder="Add time (30mins equal to 1)" 
+name="timeUse"
+id="timeUse"
+value={inputCourse.timeUse}
 onChange={handleChangeInput}
 />
 <label>course Image</label>

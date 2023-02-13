@@ -1,35 +1,74 @@
-import React, { useState } from 'react'
-import { Button, Modal, TextInput } from 'flowbite-react'
+import React, { useEffect, useState } from 'react'
+import { Button, Modal, TextInput} from 'flowbite-react'
 import * as packageApi from '../apis/package-api'
+import SelectionPackage from '../features/package/SelectionPackage';
 
 const initialInput = {
     "title":"",
     "price":"",
     "topup":"",
     "packageImage":"",
-    "adsImage":""
+    "adsImage":"",
 }
 
-function PackageModal({openModal,onClose}) {
-
+function PackageModal({openModal,onClose,allPackage}) {
 const [input,setInput] = useState(initialInput)
+const [isEdit,setIsEdit] = useState(false)
+const [selectedPackage,setSelectedPackage] = useState({})
+
+// useEffect(()=>{
+//   if(isEdit===true){
+//   }
+// },[])
+
+// const handleShowExistPackage = (showPackage) => {
+//   setInput(showPackage)
+// }
+
 const handleChangeInput = (e) => {
-  // console.log(e.target.name)
   setInput({...input,[e.target.name]:e.target.value})
+  
 }
 
   const handleSubmitForm = async(e) => {
     try{
-       e.preventDefault()
-        // console.log(input)
-      await packageApi.createPackage(input)
+      e.preventDefault()
+      const payload = {...input}
+        payload.packageImage = input.packageImage ? input.packageImage : null
+        payload.adsImage = input.adsImage ? input.adsImage : null
+       
+        if(isEdit===false){
+      await packageApi.createPackage(payload)
       setInput(initialInput)
       onClose()
+      }else{
+      await packageApi.editPackage(payload)
+      setInput(initialInput)
+
+      }
     }catch(err){
       console.log(err)
     }
   }
 
+  const getPackageObj = async (value) => {
+    
+    const packages = await allPackage.find(el=>el.id === +value.id)
+    setSelectedPackage(packages)
+    // console.log(selectedPackage)
+  }
+
+  const handleDelete = async () => { 
+    // console.log(selectedPackage.id)
+      const result = await packageApi.deletePackage(selectedPackage.id)
+      // console.log(result)
+  // console.log(packageToDelete)
+  // await packageApi.deletePackage(el.title)
+}
+
+  const handleChangeEdit = () => {
+    setIsEdit(!isEdit)
+  }
   return (
     <>
   <Modal
@@ -45,6 +84,13 @@ const handleChangeInput = (e) => {
         <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">
           Add Package
         </h3>
+        {isEdit === false?"":
+        <SelectionPackage 
+        allPackage={allPackage} 
+        input={input}
+        setInput={setInput}
+        getPackageObj={getPackageObj}
+        />}
         <div>
           <div className="mb-2 block">
           </div>
@@ -89,6 +135,7 @@ const handleChangeInput = (e) => {
             id="packageImage"
             type="file"
             name="packageImage"
+            accept='image/*,.jpg,.pdf,.png'
             value={input.packageImage}
             onChange={handleChangeInput}
           />
@@ -101,14 +148,26 @@ const handleChangeInput = (e) => {
             id="adsImage"
             type="file"
             name="adsImage"
+            accept='image/*,.jpg,.pdf,.png'
             value={input.adsImage}
             onChange={handleChangeInput}
           />
         </div>
         <label>advertisement Image</label>
-        <div className="flex justify-center">
+        {isEdit === false?(<div className="flex justify-center">
              <Button type='submit'>
              Add
+             </Button>
+        </div>
+        ):(<>
+        <div className='flex justify-between py-4'>
+        <Button type='submit'>Edit</Button>
+        <Button onClick={handleDelete} >Delete</Button>
+        </div>
+        </>)}
+        <div className="flex justify-center">
+             <Button type='button' onClick={handleChangeEdit}>
+             Switch to Edit or delete
              </Button>
         </div>
       </div>

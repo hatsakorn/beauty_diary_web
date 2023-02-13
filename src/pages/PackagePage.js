@@ -1,13 +1,24 @@
 import Carousels from '../layouts/Carousels';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuth from '../hooks/useAuth';
 import PackageModal from '../components/PackageModal';
+import * as packageApi from '../apis/package-api'
+import { Link } from 'react-router-dom';
 
 
 function PackagePage() {
   const {authenticatedUser} = useAuth()
-
+  const [allPackage,setAllPackage] = useState([])
   const [openModal,setOpenModal] = useState(false)
+
+
+  useEffect(()=>{
+    const fetchAllPackage = async () => {
+      const res = await packageApi.getPackage()
+      setAllPackage(res.data)
+    }
+  fetchAllPackage()
+  },[])
 
   const handleOpenModal = () => {
     setOpenModal(true)
@@ -33,10 +44,20 @@ function PackagePage() {
     </>
     ):"")}
 
-    <PackageModal openModal={openModal} onClose={()=>setOpenModal(false)}></PackageModal>
+    <PackageModal 
+    openModal={openModal} 
+    onClose={()=>setOpenModal(false)} 
+    allPackage={allPackage}
+    >
+    </PackageModal>
     </div>
     <Carousels/>
-    <div className='bg-white m-8'></div>
+    <div className='bg-white m-4'></div>
+    {authenticatedUser && <Link to="/transaction">
+      <div className='flex justify-center'>
+    <button className='bg-rose-300 px-2 py-3 mb-4 text-center rounded-lg'>Buy Package</button>
+      </div>
+    </Link>}
     </>
   )
 }

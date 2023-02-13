@@ -9,6 +9,8 @@ import LoginPage from '../pages/LoginPage'
 import ThankPage from '../pages/ThankPage'
 import RedirectAuthenticate from '../features/auth/RedirectAuthenticate'
 import ProtectedRoute from '../features/auth/ProtectedRoute'
+import RHistoryPage from "../pages/RHistoryPage";
+import TransactionPage from "../pages/TransactionPage";
 const router = createBrowserRouter([
   
   {
@@ -30,6 +32,10 @@ const router = createBrowserRouter([
         element:<CoursePage/>
       },
       {
+        path: "/transaction",
+        element: <TransactionPage />,
+      },
+      {
         path: "/login",
         element: 
         <RedirectAuthenticate>
@@ -44,6 +50,10 @@ const router = createBrowserRouter([
         {
           path: "/wallet",
           element: <WalletPage />,
+        },
+        {
+          path: "/hReservation",
+          element: <RHistoryPage />,
         },
         {
           path: "/reserve",
