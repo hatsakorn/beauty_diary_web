@@ -23,8 +23,8 @@ const handleChangeInput = (e) => {
 // console.log(getCourses)
 const handleShowCourse = (e) => {
   setInputReserve(previous=>({...previous,[e.target.name]:e.target.value}))
-  console.log(inputReserve)
-  console.log(e.target.name , e.target.value)
+  // console.log(inputReserve)
+  // console.log(e.target.name , e.target.value)
 }
 
 

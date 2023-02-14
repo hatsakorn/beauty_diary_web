@@ -4,6 +4,7 @@ import * as reserveApi from '../apis/reserve-api'
 import * as timeApi from '../apis/reserve-api'
 import Timeslot from '../features/reserve/Timeslot';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import useReserve from '../hooks/useReserve'
 
 const initialInput = {
   "title":"",
@@ -17,6 +18,7 @@ const [getCourses,setGetCourses] = useState([])
 const [inputReserve,setInputReserve] = useState(initialInput)
 
 const navigate = useNavigate()
+const {setIsCourse} = useReserve()
 
 useEffect(()=>{
   const fetchCourse = async () => {
@@ -41,7 +43,8 @@ const handleSubmitForm = async e => {
   try{
     await reserveApi.reservation(inputReserve)
     setInputReserve(initialInput)
-    navigate('/thank')
+    setIsCourse(true)
+    navigate('/transaction')
   }catch(err){
     console.log(err)
   }

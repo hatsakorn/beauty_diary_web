@@ -4,10 +4,12 @@ import useAuth from '../hooks/useAuth';
 import PackageModal from '../components/PackageModal';
 import * as packageApi from '../apis/package-api'
 import { Link } from 'react-router-dom';
+import useReserve from '../hooks/useReserve';
 
 
 function PackagePage() {
   const {authenticatedUser} = useAuth()
+  const {setIsCourse} = useReserve()
   const [allPackage,setAllPackage] = useState([])
   const [openModal,setOpenModal] = useState(false)
 
@@ -23,6 +25,11 @@ function PackagePage() {
   const handleOpenModal = () => {
     setOpenModal(true)
   }
+
+  const handleClickPackage = () => {
+    setIsCourse(false)
+  }
+
   return (
     <>
     <div>
@@ -55,7 +62,7 @@ function PackagePage() {
     <div className='bg-white m-4'></div>
     {authenticatedUser && <Link to="/transaction">
       <div className='flex justify-center'>
-    <button className='bg-rose-300 px-2 py-3 mb-4 text-center rounded-lg'>Buy Package</button>
+    <button className='bg-rose-300 px-2 py-3 mb-4 text-center rounded-lg' onClick={handleClickPackage}>Buy Package</button>
       </div>
     </Link>}
     </>

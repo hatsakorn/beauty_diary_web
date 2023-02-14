@@ -32,10 +32,6 @@ const router = createBrowserRouter([
         element:<CoursePage/>
       },
       {
-        path: "/transaction",
-        element: <TransactionPage />,
-      },
-      {
         path: "/login",
         element: 
         <RedirectAuthenticate>
@@ -47,10 +43,14 @@ const router = createBrowserRouter([
         <Outlet/>
         </ProtectedRoute>,
         children:[
-        {
-          path: "/wallet",
-          element: <WalletPage />,
-        },
+          {
+            path: "/transaction",
+            element: <TransactionPage />,
+          },
+          {
+            path: "/wallet",
+            element: <WalletPage />,
+          },
         {
           path: "/hReservation",
           element: <RHistoryPage />,

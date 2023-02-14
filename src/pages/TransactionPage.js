@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import * as packageApi from "../apis/package-api";
+import * as transactionApi from '../apis/transaction-api'
+import * as reserveApi from '../apis/reserve-api'
 import useAuth from "../hooks/useAuth";
+import useReserve from "../hooks/useReserve";
 
 const initialInput = {
   paymentDetail: "complete",
@@ -11,30 +14,31 @@ const initialInput = {
 function TransactionPage() {
   const [input, setInput] = useState(initialInput);
   const [getAllPackage, setGetAllPackage] = useState([]);
-  const [selectedPackage, setSelectedPackage] = useState([]);
+  // const [selectedPackage, setSelectedPackage] = useState([]);
+
+
   const navigate = useNavigate();
 
   const { authenticatedUser } = useAuth();
-
+  const {isCourse,reserveCourse} = useReserve()
 
   useEffect(() => {
     setInput({ ...initialInput, userId: authenticatedUser?.id })
     const fetchAllPackage = async () => {
       const res = await packageApi.getPackage();
       setGetAllPackage(res.data);
-      
     };
     fetchAllPackage();
   }, []);
 
   const handleChange = (e) => {
-    setSelectedPackage({ ...input, [e.target.name]: e.target.value });
+    // setSelectedPackage({ ...input, [e.target.name]: e.target.value });
     setInput({ ...input, [e.target.name]: e.target.value });
-    console.log(input)
+    // console.log(input)
   };
 
   const handleClickBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   const handleSubmit = async (e) => {
@@ -42,9 +46,16 @@ function TransactionPage() {
       e.preventDefault();
       const payload = {...input}
       payload.verfifyImage = input.verfifyImage ? input.verfifyImage : null
+      if(isCourse===true){
+      await transactionApi.reserveCourse(payload)
+      await reserveApi.updateStatus({status:"complete"},authenticatedUser.id)
+      setInput(initialInput)
+      navigate('/thank')
+      }else{
       await packageApi.buyPackage(payload)
       setInput(initialInput)
       navigate('/thank')
+      }
     } catch (err) {
       console.log(err);
     }
@@ -56,16 +67,27 @@ function TransactionPage() {
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
             <div className="flex justify-center">
-            <div className="text-5xl py-6">{authenticatedUser.firstName} {authenticatedUser.lastName} Wallet</div>
+            <div className="text-4xl py-6">Payment</div>
             </div>
             <div>
+              {isCourse === true?(
+              <>
+              <select name="reservationId" onChange={handleChange}>
+              <option hidden="hidden">Confirm Your Selected Course</option>
+              {reserveCourse.map(el=>(
+              <option key={el.id} value={el.id}>{el.id}. {el.Course.title} Price:{el.Course.price}</option>
+              ))}
+              </select>
+              </>
+              ):(
               <select name="packageId" onChange={handleChange}>
+                <option hidden="hidden">Choose Your package</option>
                 {getAllPackage.map((el) => (
                   <option key={el.id} value={el.id}>
                     {el.title} Price:{el.price} get: {el.topup}
                   </option>
                 ))}
-              </select>
+              </select>)}
               <div className="my-6">
                 <input
                   placeholder="Your description"

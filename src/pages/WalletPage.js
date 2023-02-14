@@ -1,35 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Transaction from '../features/wallet/Transaction';
-
+import * as transactionApi from '../apis/transaction-api'
+import useAuth from '../hooks/useAuth'
 
 function WalletPage() {
+  const [getTopup,setGetTopup] = useState([])
+  const [getPackage,setGetPackage] = useState([])
   const navigate = useNavigate()
 
-  const handleClick = () => {
+  const {authenticatedUser} = useAuth()
+  useEffect(()=>{
+    const userId = authenticatedUser.id
+    const fetchTopup = async () => {
+      const res = await transactionApi.getTopup(userId)
+      setGetTopup(res.data)
+    }
+    fetchTopup()
+    const fetchPackage = async () => {
+      const res = await transactionApi.getPackage(userId)
+      setGetPackage(res.data)
+    }
+    fetchPackage()
     
+  },[])
+
+  const handleClick = () => {
     navigate('/hReservation')
   }
 
+
   return (
     <>
+    <>
     <div>
-      <div>
-        Your Wallet
+      <div className="text-5xl py-6 flex justify-center">
+        {authenticatedUser.firstName} {authenticatedUser.lastName} Wallet
       </div>
-      <div>
-        Your Balance : 3000 Baht
+      <div className="text-2xl">
+        Your Balance : {getTopup} Baht
       </div>
     </div>
     <div>
-      <div>
+      <div className=" flex justify-center text-5xl py-6">
         History
       </div>
       <div>
-        <Transaction/>
+        <Transaction getPackage={getPackage}/>
       </div>
-    <button onClick={handleClick} >Your Reservation</button>
+      <div className='flex justify-center'>
+    <button onClick={handleClick} className="text-2xl bg-rose-300 py-4 px-3 my-4">Your Reservation</button>
     </div>
+    </div>
+    </>
     </>
   )
 }
