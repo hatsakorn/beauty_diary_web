@@ -3,25 +3,35 @@ import { useNavigate } from 'react-router-dom';
 import Transaction from '../features/wallet/Transaction';
 import * as transactionApi from '../apis/transaction-api'
 import useAuth from '../hooks/useAuth'
+// import useReserve from '../hooks/useReserve';
 
 function WalletPage() {
-  const [getTopup,setGetTopup] = useState([])
+  // const [getTopups,setGetTopups] = useState([])
   const [getPackage,setGetPackage] = useState([])
+  const [getBalance,setGetBalance] = useState("")
+  
   const navigate = useNavigate()
-
   const {authenticatedUser} = useAuth()
+  // const {completedCourse,reserveCourse} = useReserve()
+
   useEffect(()=>{
-    const userId = authenticatedUser.id
-    const fetchTopup = async () => {
-      const res = await transactionApi.getTopup(userId)
-      setGetTopup(res.data)
-    }
-    fetchTopup()
+    // const fetchTopup = async () => {
+    //   const res = await transactionApi.getTopup()
+    //   setGetTopups(res.data)
+    // }
+    // fetchTopup()
+
     const fetchPackage = async () => {
-      const res = await transactionApi.getPackage(userId)
+      const res = await transactionApi.getPackage()
       setGetPackage(res.data)
     }
     fetchPackage()
+
+    const fetchBalance = async () => {
+      const res = await transactionApi.getBalance()
+      setGetBalance(res.data)
+    }
+    fetchBalance()
     
   },[])
 
@@ -29,16 +39,14 @@ function WalletPage() {
     navigate('/hReservation')
   }
 
-
   return (
-    <>
     <>
     <div>
       <div className="text-5xl py-6 flex justify-center">
         {authenticatedUser.firstName} {authenticatedUser.lastName} Wallet
       </div>
       <div className="text-2xl">
-        Your Balance : {getTopup} Baht
+        Your Balance : {getBalance} Baht
       </div>
     </div>
     <div>
@@ -52,7 +60,6 @@ function WalletPage() {
     <button onClick={handleClick} className="text-2xl bg-rose-300 py-4 px-3 my-4">Your Reservation</button>
     </div>
     </div>
-    </>
     </>
   )
 }

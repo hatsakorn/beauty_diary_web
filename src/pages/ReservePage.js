@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import SelectionList from '../features/reserve/SelectionList'
 import * as reserveApi from '../apis/reserve-api'
-import * as timeApi from '../apis/reserve-api'
+// import * as timeApi from '../apis/reserve-api'
 import Timeslot from '../features/reserve/Timeslot';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import useReserve from '../hooks/useReserve'
+import useAuth from '../hooks/useAuth';
+
 
 const initialInput = {
   "title":"",
@@ -18,18 +20,22 @@ const [getCourses,setGetCourses] = useState([])
 const [inputReserve,setInputReserve] = useState(initialInput)
 
 const navigate = useNavigate()
-const {setIsCourse} = useReserve()
 
+const {setIsCourse,fetchCourse} = useReserve()
+
+const {authenticatedUser} = useAuth()
+
+const fetchCourses = async () => {
+  const res = await reserveApi.getAllCourse()
+  // console.log(res.data)
+  setGetCourses(res.data)
+}
 useEffect(()=>{
-  const fetchCourse = async () => {
-    const res = await reserveApi.getAllCourse()
-    // console.log(res.data)
-    setGetCourses(res.data)
-  }
-  fetchCourse()
+  fetchCourses()
 
 },[])
 
+const userId = authenticatedUser?.id
 
 const getTimeslot = (timeslot) => {
       return timeslot
@@ -42,6 +48,7 @@ const handleSubmitForm = async e => {
   e.preventDefault()
   try{
     await reserveApi.reservation(inputReserve)
+    fetchCourse(userId)
     setInputReserve(initialInput)
     setIsCourse(true)
     navigate('/transaction')
@@ -53,8 +60,8 @@ const handleSubmitForm = async e => {
   return (
     <>
     <h1 className='text-4xl text-center'><strong>Reservation</strong></h1>
+    <SelectionList getCourses={getCourses} setGetCourses={setGetCourses} setInputReserve={setInputReserve} inputReserve={inputReserve} fetchCourses={fetchCourses}/>
     <form onSubmit={handleSubmitForm}>
-    <SelectionList getCourses={getCourses} setGetCourses={setGetCourses} setInputReserve={setInputReserve} inputReserve={inputReserve}/>
     <div className='flex w-5/6 my-2'>
     <h1>Date</h1>
       </div>

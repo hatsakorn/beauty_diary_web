@@ -16,6 +16,7 @@ const [inputPackage,setInputPackage] = useState(initialPackage)
 
 
 // useEffect(()=>{
+    // getPackageObj(inputPackage)
     // setInputPackage({
     // "title":inputPackage.title||"",
     // "price":inputPackage.price||"",
@@ -31,6 +32,7 @@ const handleChangePackage = (e) => {
     setInputPackage({...inputPackage,[e.target.name]:e.target.value})
     setInput({...inputPackage,[e.target.name]:e.target.value})
     // handleShowExistPackage(inputPackage)
+    getPackageObj(input)
 }
 // const limitOption = () => {
 //   console.log(selectRef.current)
@@ -39,7 +41,7 @@ const handleChangePackage = (e) => {
 //   }
 // }
 // console.log(allPackage)
-getPackageObj(inputPackage)
+
   return (
     <>
     <select 
@@ -51,8 +53,8 @@ getPackageObj(inputPackage)
     >
     <option hidden="hidden">Choose Package to edit ot delete</option>
    
-  {allPackage.map(el=>
-     <option key={el.id} value={el.id}>{el.id}. {el.title}</option>
+  {allPackage.map((el,idx)=>
+     <option key={el.id} value={el.id}>{idx+1}. {el.title}</option>
      )}
 
     </select>

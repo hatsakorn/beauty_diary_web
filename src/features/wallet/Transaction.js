@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import useReserve from '../../hooks/useReserve';
 
 function Transaction({getPackage}) {
+  const [isCourse,setIsCourse] = useState(false)
+
+  const {reserveCourse,fetchCourse} = useReserve()
+
+  useEffect(()=>{
+    fetchCourse()
+  },[])
+  const handleToggle = () => {
+    setIsCourse(!isCourse)
+  }
 
 
   return (
@@ -8,22 +19,34 @@ function Transaction({getPackage}) {
     <div>
       <div className='flex justify-evenly'>
         <div>Transaction</div>
-        <div>Package</div>
+        <div>{isCourse === true ?"Courses":"Packages"}</div>
       </div>
-      {getPackage.map(el=>
-      <div key={el.id} className='flex justify-evenly'>
+      {isCourse === true ?
+      (<>{reserveCourse.map((el,idx)=>
+        <div key={idx} className='flex justify-evenly'>
+        <div>
+          {el.title}
+        </div>
+        <div>
+          -{el.price}
+        </div>
+        </div>)}
+        </>)
+      :(<>{getPackage.map((el,idx)=>
+      <div key={idx} className='flex justify-evenly'>
       <div>
         {el.Package.title}
       </div>
       <div>
-        {el.Package.topup}
+        +{el.Package.topup}
       </div>
-      </div>
-      )}
+      </div>)}
+      </>)}
     </div>
 
-    <div>
-
+    <div className='flex justify-center'>
+   
+    <button onClick={handleToggle} className="text-lg bg-rose-300 py-4 px-3 my-4">{isCourse === true ?"Packages":"Courses"}</button>
     </div>
     </>
   )

@@ -12,7 +12,7 @@ export default function Homepage() {
 {/* logo login register */}
   <div className='flex justify-around bg-rose-300 -m-1'>
     <div className='bg-pink-200 p-2 mt-2 w-32 mb-2 rounded-full text-center'>
-    <p>LOGO</p>
+    <p>Beauty <br/>Diary</p>
     </div>
     {authenticatedUser ?(
     <div className='bg-pink-200 p-2 mb-2 rounded-lg text-center'>

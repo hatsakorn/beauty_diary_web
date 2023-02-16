@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal, TextInput} from 'flowbite-react'
 import * as packageApi from '../apis/package-api'
 import SelectionPackage from '../features/package/SelectionPackage';
+import { useNavigate } from 'react-router-dom';
 
 const initialInput = {
     "title":"",
@@ -15,6 +16,8 @@ function PackageModal({openModal,onClose,allPackage}) {
 const [input,setInput] = useState(initialInput)
 const [isEdit,setIsEdit] = useState(false)
 const [selectedPackage,setSelectedPackage] = useState({})
+
+const navigate = useNavigate()
 
 // useEffect(()=>{
 //   if(isEdit===true){
@@ -41,6 +44,7 @@ const handleChangeInput = (e) => {
       await packageApi.createPackage(payload)
       setInput(initialInput)
       onClose()
+      navigate(0)
       }else{
       await packageApi.editPackage(payload)
       setInput(initialInput)
@@ -60,7 +64,9 @@ const handleChangeInput = (e) => {
 
   const handleDelete = async () => { 
     // console.log(selectedPackage.id)
-      const result = await packageApi.deletePackage(selectedPackage.id)
+    const {id} = input
+      await packageApi.deletePackage(id)
+      navigate('/')
       // console.log(result)
   // console.log(packageToDelete)
   // await packageApi.deletePackage(el.title)

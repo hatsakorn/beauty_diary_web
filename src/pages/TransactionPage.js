@@ -8,27 +8,34 @@ import useReserve from "../hooks/useReserve";
 
 const initialInput = {
   paymentDetail: "complete",
-  verfifyImage: ""
+  verifyImage: ""
 };
 
 function TransactionPage() {
   const [input, setInput] = useState(initialInput);
   const [getAllPackage, setGetAllPackage] = useState([]);
-  // const [selectedPackage, setSelectedPackage] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState([]);
 
 
   const navigate = useNavigate();
 
   const { authenticatedUser } = useAuth();
-  const {isCourse,reserveCourse} = useReserve()
+  const {isCourse,fetchCourse} = useReserve()
 
   useEffect(() => {
+    fetchCourse()
     setInput({ ...initialInput, userId: authenticatedUser?.id })
     const fetchAllPackage = async () => {
       const res = await packageApi.getPackage();
       setGetAllPackage(res.data);
     };
+    const fetchSelectedCourse = async () => {
+      const res = await transactionApi.getAllCourse();
+      setSelectedCourse(res.data);
+      // console.log(res.data)
+    };
     fetchAllPackage();
+    fetchSelectedCourse()
   }, []);
 
   const handleChange = (e) => {
@@ -45,10 +52,10 @@ function TransactionPage() {
     try {
       e.preventDefault();
       const payload = {...input}
-      payload.verfifyImage = input.verfifyImage ? input.verfifyImage : null
+      payload.verifyImage = input.verifyImage ? input.verifyImage : null
       if(isCourse===true){
       await transactionApi.reserveCourse(payload)
-      await reserveApi.updateStatus({status:"complete"},authenticatedUser.id)
+      await reserveApi.updateStatus({id:+payload.reservationId,status:"complete"})
       setInput(initialInput)
       navigate('/thank')
       }else{
@@ -74,17 +81,17 @@ function TransactionPage() {
               <>
               <select name="reservationId" onChange={handleChange}>
               <option hidden="hidden">Confirm Your Selected Course</option>
-              {reserveCourse.map(el=>(
-              <option key={el.id} value={el.id}>{el.id}. {el.Course.title} Price:{el.Course.price}</option>
+              {selectedCourse.map((el,idx)=>(
+              <option key={el.id} value={el.id}>{idx+1}. {el.Course.title} Price:{el.Course.price}</option>
               ))}
               </select>
               </>
               ):(
               <select name="packageId" onChange={handleChange}>
                 <option hidden="hidden">Choose Your package</option>
-                {getAllPackage.map((el) => (
+                {getAllPackage.map((el,idx) => (
                   <option key={el.id} value={el.id}>
-                    {el.title} Price:{el.price} get: {el.topup}
+                    {idx+1}. Price:{el.price} get: {el.topup}
                   </option>
                 ))}
               </select>)}

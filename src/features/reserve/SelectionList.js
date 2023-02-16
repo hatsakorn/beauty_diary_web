@@ -11,7 +11,7 @@ const initialCourseInput = {
   "courseImage":""
 }
 
-export default function SelectionList({getCourses,setGetCourses,inputReserve,setInputReserve}){
+export default function SelectionList({getCourses,setGetCourses,inputReserve,setInputReserve,fetchCourses}){
 const [edit,setEdit] = useState(false)
 const [inputCourse,setInputCourse] = useState(initialCourseInput)
 
@@ -31,8 +31,11 @@ const handleShowCourse = (e) => {
 const handleSubmitForm = async e => {
   e.preventDefault()
   try{
-    await reserveApi.createCourse(inputCourse)
+    const payload = {...inputCourse}
+    payload.courseImage = inputCourse.courseImage ? inputCourse.courseImage : null
+    await reserveApi.createCourse(payload)
     setInputCourse(initialCourseInput)
+    fetchCourses()
   }catch(err){
     console.log(err)
   }
@@ -44,8 +47,8 @@ return (
   <>
   <select name="title" onChange={handleShowCourse}>
     <option hidden="hidden">Choose Your Course</option>
-  {getCourses.map(el=>(
-    <option value={el.title} key={el.id}>{el.title}</option>
+  {getCourses.map((el,idx)=>(
+    <option value={el.title} key={el.id}>{idx+1}. {el.title} Price:{el.price}</option>
     ))}
   </select>
   </>
