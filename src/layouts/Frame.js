@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function Frame() {
-  return (
-    <div className='m-3'></div>
-  )
+  return <div className=""></div>;
 }
 
-export default Frame
+export default Frame;
