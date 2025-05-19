@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/beauty_diary_web/static/css/main.e78a9df9.css",
+    "main.js": "/beauty_diary_web/static/js/main.28da3cbd.js",
+    "static/js/787.50b0239e.chunk.js": "/beauty_diary_web/static/js/787.50b0239e.chunk.js",
+    "static/media/promotion.png": "/beauty_diary_web/static/media/promotion.c6975f2c8dad9456cbcc.png",
+    "static/media/pricing1.png": "/beauty_diary_web/static/media/pricing1.db65587c002875fc07ea.png",
+    "static/media/package.png": "/beauty_diary_web/static/media/package.d65ab5ff3ce34be23f09.png",
+    "static/media/pricing2.png": "/beauty_diary_web/static/media/pricing2.8ce483ad9af0417afbf3.png",
+    "index.html": "/beauty_diary_web/index.html",
+    "main.e78a9df9.css.map": "/beauty_diary_web/static/css/main.e78a9df9.css.map",
+    "main.28da3cbd.js.map": "/beauty_diary_web/static/js/main.28da3cbd.js.map",
+    "787.50b0239e.chunk.js.map": "/beauty_diary_web/static/js/787.50b0239e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e78a9df9.css",
+    "static/js/main.28da3cbd.js"
+  ]
+}
